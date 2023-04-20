@@ -1,100 +1,132 @@
 import { useState } from "react";
 
 function Calculator() {
-  const digit = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-  const tasks = ["+", "-", "*", "/"];
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  const operators = ["+", "-", "*", "/"];
 
-  const [total, setTotal] = useState(0);
-  const [action, setAction] = useState("");
+  const [total, setTotal] = useState(null);
+  const [operator, setOperator] = useState("");
   const [number, setNumber] = useState("");
 
-  const num = (num) => {
-    setNumber(number + num);
+  const handleDigitClick = (digit) => {
+    setNumber(number + digit);
   };
-  const clear = () => {
-    setAction("");
+
+  const handleClearClick = () => {
+    setTotal(null);
+    setOperator("");
     setNumber("");
-    setTotal(0);
   };
-  function cal(task) {
+
+  const handleOperatorClick = (newOperator) => {
     if (number === "") {
-      setAction(task);
+      setOperator(newOperator);
       setTotal(total);
-    } else if (total === 0) {
+    } else if (total === null) {
       setTotal(Number(number));
-      setAction(task);
+      setOperator(newOperator);
       setNumber("");
     } else {
-      let result = 0;
-      if (action === "+") {
-        result = total + Number(number);
-      } else if (action === "-") {
-        result = total - Number(number);
-      } else if (action === "*") {
-        result = total * Number(number);
-      } else if (action === "/") {
-        result = total / Number(number);
+      let result;
+      switch (operator) {
+        case "+":
+          result = total + Number(number);
+          break;
+        case "-":
+          result = total - Number(number);
+          break;
+        case "*":
+          result = total * Number(number);
+          break;
+        case "/":
+          if (Number(number) === 0) {
+            alert("Cannot divide by zero!");
+            return;
+          }
+          result = total / Number(number);
+          break;
+        default:
+          result = total;
       }
       setTotal(result);
-      setAction(task);
+      setOperator(newOperator);
       setNumber("");
     }
-  }
+  };
 
-  const equal = () => {
-    if (!action) {
+  const handleEqualClick = () => {
+    if (!operator) {
       return;
     }
-    let result = 0;
-    if (action === "+") {
-      result = total + Number(number);
-    } else if (action === "-") {
-      result = total - Number(number);
-    } else if (action === "*") {
-      result = total * Number(number);
-    } else if (action === "/") {
-      result = total / Number(number);
+    let result;
+    switch (operator) {
+      case "+":
+        result = total + Number(number);
+        break;
+      case "-":
+        result = total - Number(number);
+        break;
+      case "*":
+        result = total * Number(number);
+        break;
+      case "/":
+        if (Number(number) === 0) {
+          alert("Cannot divide by zero!");
+          return;
+        }
+        result = total / Number(number);
+        console.log(result);
+        break;
+      default:
+        result = total;
     }
     setTotal(result);
-    setAction("");
-    setNumber(result);
+    setOperator("");
+    setNumber(result.toFixed(2));
   };
 
   return (
-    <div className=" ">
+    <div>
       <div className="screen">
-        {number !== "" ? <p>{number}</p> : <p>{total}</p>}
+        {number !== "" ? (
+          <p>{number}</p>
+        ) : (
+          <p>
+            {operator} {total === null ? "" : total}
+          </p>
+        )}
       </div>
       <div className="num-container">
-        {digit.map((val) => {
-          return (
-            <p onClick={() => num(val)} className="num">
-              {val}
-            </p>
-          );
-        })}
+        {digits.map((digit) => (
+          <button
+            key={digit}
+            className="num"
+            onClick={() => handleDigitClick(digit)}
+          >
+            {digit}
+          </button>
+        ))}
       </div>
       <div className="tasks-cont">
-        {tasks.map((task) => {
-          return (
-            <div>
-              <button className="tasks" onClick={() => cal(task)}>
-                {task}
-              </button>
-            </div>
-          );
-        })}
+        {operators.map((operator, idx) => (
+          <button
+            key={idx}
+            className="tasks"
+            onClick={() => handleOperatorClick(operator)}
+          >
+            {operator}
+          </button>
+        ))}
       </div>
       <div className="clearBox">
-        <button className="clear" onClick={() => clear()}>
+        <button className="clear" onClick={() => handleClearClick()}>
           C
         </button>
-        <button className="ans" onClick={() => equal()}>
+        <button className="ans" onClick={() => handleEqualClick()}>
           =
         </button>
       </div>
     </div>
   );
 }
-
 export default Calculator;

@@ -22,10 +22,11 @@
   font-weight: bold;
   cursor: pointer;
   width: 90px;
-  height: 80px;
+  height: 85px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 45px;
 }
 
 .num:hover {
@@ -41,12 +42,12 @@
   font-size: 80px;
   font-weight: bold;
   margin-right: 5px;
-  margin-bottom: 5px;
+  
   cursor: pointer;
-  width: 95px;
-  height:  90px;
+  width: 90px;
+  height: 85px;
   margin-top: 0;
-   margin-bottom: 40px;
+   margin-bottom: 45px;
 }
 
  
@@ -102,17 +103,17 @@
   margin-top: 408px ;
   margin-left: 250px;
   position: relative;
+  width: 270px;
+  
 }
 
 .tasks-cont {
  margin-left: 520px;
  
-  width: 300px;
+  width: 100px;
   position: absolute;
-  margin-bottom: 10px;
+ 
 }
 
-.ans {
-  margin-top: 10px;
-}
+ 
  
